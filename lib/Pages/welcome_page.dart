@@ -7,6 +7,18 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(margin: EdgeInsets.only(bottom: 20), child: Image.asset("")),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: () {}, child: Text("Sign up ")),
+            SizedBox(width: 100),
+            ElevatedButton(onPressed: () {}, child: Text("Sign in "))
+          ],
+        ),
+      ]),
+    );
   }
 }
