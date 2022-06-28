@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
+              Center(child: DrawerHeader(child: Text("welcome NAME "))),
               ListTile(
                 title: const Text("Signin"),
                 trailing: const Icon(Icons.login),
