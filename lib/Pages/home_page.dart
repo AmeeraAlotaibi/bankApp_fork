@@ -1,7 +1,9 @@
+import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,10 +20,11 @@ class HomePage extends StatelessWidget {
             children: [
               Center(child: DrawerHeader(child: Text("welcome NAME "))),
               ListTile(
-                title: const Text("Signin"),
-                trailing: const Icon(Icons.login),
+                title: const Text("Logout"),
+                trailing: const Icon(Icons.logout),
                 onTap: () {
-                  GoRouter.of(context).push('/signin');
+                  context.read<AuthProvider>().logout();
+                  context.go('/Welcome-page');
                 },
               ),
               ListTile(

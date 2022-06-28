@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
     GoRoute(path: '/', builder: (context, state) => WelcomePage()),
     GoRoute(path: '/home-page', builder: (context, state) => HomePage()),
     GoRoute(path: '/signup', builder: (context, state) => SignupPage()),
-    GoRoute(path: '/test-page', builder: (context, state) => TestPage()),
+    GoRoute(path: '/test-page', builder: (context, state) => HomePage()),
+    GoRoute(path: '/welcome-page', builder: (context, state) => WelcomePage()),
   ]);
 }
