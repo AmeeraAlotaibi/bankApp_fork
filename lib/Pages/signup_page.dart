@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:bank_app/models/user.dart';
+import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -23,19 +24,23 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
             child: Center(
-      child: Form(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Sign Up ",
-              style: TextStyle(fontSize: 50),
-            ),
-            Row(
+          child: Form(
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text(
+                  "Sign Up ",
+                  style: TextStyle(fontSize: 50),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+// ****************** Image Picker **************************
                 GestureDetector(
                   onTap: () async {
                     final XFile? image =
@@ -49,8 +54,9 @@ class _SignupPageState extends State<SignupPage> {
                     height: 200,
                     margin: const EdgeInsets.only(top: 20),
                     decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color.fromARGB(255, 200, 25, 5)),
+                      shape: BoxShape.circle,
+                      color: Color(0xFFDDDDDD),
+                    ),
                     child: _image != null
                         ? CircleAvatar(
                             backgroundImage: new FileImage(_image),
@@ -58,7 +64,7 @@ class _SignupPageState extends State<SignupPage> {
                         : Container(
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Color.fromARGB(255, 14, 104, 177)),
+                                color: Color(0xFFDDDDDD)),
                             width: 200,
                             height: 200,
                             child: Icon(
@@ -68,59 +74,61 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  //child: Text("Image"),
+                SizedBox(
+                  height: 40,
                 ),
+                Container(
+                  width: 250,
+                  child: TextField(
+                    controller: _username,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: "Enter a username",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: 250,
+                  child: TextField(
+                    controller: _password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.password),
+                        hintText: "Enter a password",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Container(
+                    width: 250,
+                    height: 55,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          context.read<AuthProvider>().signup(
+                                user: User(
+                                    username: _username.text,
+                                    password: _password.text),
+                              );
+                        },
+                        child: Text(
+                          "Sign up",
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15))))),
               ],
             ),
-            SizedBox(
-              height: 50,
-            ),
-            Container(
-              width: 250,
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person),
-                    hintText: "Enter a username",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    )),
-                controller: _username,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: 250,
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.password),
-                    hintText: "Enter a password",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    )),
-                controller: _password,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Container(
-                  width: 250,
-                  height: 60,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        context
-                      },
-                      child: Text("Sign up"),
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15))))),
-            ),
-          ],
-        ),
-      ),
-    )));
+          ),
+        )));
   }
 }

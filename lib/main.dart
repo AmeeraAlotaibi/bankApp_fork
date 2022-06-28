@@ -1,10 +1,10 @@
-import 'dart:js';
-
+import 'package:bank_app/Pages/home_page.dart';
+import 'package:bank_app/Pages/test_page.dart';
 import 'package:bank_app/Pages/welcome_page.dart';
 import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-
 import 'Pages/signup_page.dart';
 
 void main() {
@@ -15,14 +15,25 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      home: SignupPage(),
+      routeInformationParser: _router.routeInformationParser,
+      routeInformationProvider: _router.routeInformationProvider,
+      routerDelegate: _router.routerDelegate,
+
+      // theme data
+      theme: ThemeData(),
     );
   }
+
+  final _router = GoRouter(routes: [
+    GoRoute(path: '/', builder: (context, state) => WelcomePage()),
+    GoRoute(path: '/home-page', builder: (context, state) => HomePage()),
+    GoRoute(path: '/signup', builder: (context, state) => SignupPage()),
+    GoRoute(path: '/test-page', builder: (context, state) => TestPage()),
+  ]);
 }

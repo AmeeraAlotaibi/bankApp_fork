@@ -1,18 +1,30 @@
+import 'package:bank_app/services/client.dart';
 import 'package:dio/dio.dart';
 import '../models/user.dart';
-import 'client.dart';
 
 class AuthService {
-  final _dio = Dio();
-
-  Future<String> signup(User user) async {
-    late String token;
+  // sign up
+  Future<String> signup({required User user}) async {
+    late String token = '';
     try {
       Response res = await Client.dio.post("/signup", data: user.toJson());
-      token = res.data.token;
-      print(token);
+      token = res.data["token"];
+      print("Sign up $token");
     } on DioError catch (error) {
-      print("error");
+      print(error);
+    }
+    return token;
+  }
+
+  // sign in
+  Future<String> signin({required User user}) async {
+    late String token = '';
+    try {
+      Response res = await Client.dio.post("/signin", data: user.toJson());
+      token = res.data["token"];
+      print("Sign in $token");
+    } on DioError catch (error) {
+      print(error);
     }
     return token;
   }

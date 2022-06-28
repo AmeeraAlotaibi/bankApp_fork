@@ -8,7 +8,11 @@ class User {
   String image;
   String password;
 
-  User({required this.username, required this.password, this.image = ""});
+  User({
+    required this.username,
+    required this.password,
+    this.image = "assets/images/default-profile.png",
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);
