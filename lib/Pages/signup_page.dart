@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:bank_app/Pages/home_page.dart';
 import 'package:bank_app/models/user.dart';
 import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
@@ -118,6 +120,8 @@ class _SignupPageState extends State<SignupPage> {
                                     username: _username.text,
                                     password: _password.text),
                               );
+
+                          context.go('/home-page');
                         },
                         child: Text(
                           "Sign up",
