@@ -10,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/add_form.dart';
+
 class SignupPage extends StatefulWidget {
   SignupPage({Key? key}) : super(key: key);
 
@@ -21,6 +23,7 @@ class _SignupPageState extends State<SignupPage> {
   var _image;
   final _picker = ImagePicker();
   final _username = TextEditingController();
+  String text = "test";
   final _password = TextEditingController();
 
   @override
@@ -32,6 +35,7 @@ class _SignupPageState extends State<SignupPage> {
           child: Form(
             child: Column(
               // mainAxisSize: MainAxisSize.min,
+
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
@@ -79,34 +83,13 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(
                   height: 40,
                 ),
-                Container(
-                  width: 250,
-                  child: TextField(
-                    controller: _username,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: "Enter a username",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                  ),
-                ),
+                textFieldusername(
+                    controller: _username, text: "Enter your username"),
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  width: 250,
-                  child: TextField(
-                    controller: _password,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.password),
-                        hintText: "Enter a password",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        )),
-                  ),
-                ),
+                textFieldpassword(
+                    controller: _password, text: "Enter your password"),
                 SizedBox(
                   height: 15,
                 ),
@@ -134,5 +117,60 @@ class _SignupPageState extends State<SignupPage> {
             ),
           ),
         )));
+  }
+}
+
+class textFieldusername extends StatelessWidget {
+  const textFieldusername({
+    Key? key,
+    required this.controller,
+    required this.text,
+  }) : super(key: key);
+
+  final TextEditingController controller;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+            hintText: text,
+            prefixIcon: Icon(Icons.person),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            )),
+      ),
+    );
+  }
+}
+
+class textFieldpassword extends StatelessWidget {
+  const textFieldpassword({
+    Key? key,
+    required this.controller,
+    required this.text,
+  }) : super(key: key);
+
+  final TextEditingController controller;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250,
+      child: TextField(
+        controller: controller,
+        obscureText: true,
+        decoration: InputDecoration(
+            hintText: text,
+            prefixIcon: Icon(Icons.password_sharp),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            )),
+      ),
+    );
   }
 }
