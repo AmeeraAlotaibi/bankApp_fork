@@ -83,15 +83,23 @@ class _SignupPageState extends State<SignupPage> {
                 SizedBox(
                   height: 40,
                 ),
-                textFieldusername(
-                    controller: _username, text: "Enter your username"),
+                textField(
+                  controller: _username,
+                  text: "Enter your username",
+                  icon: Icon(Icons.person),
+                  hiddenText: false,
+                ),
                 SizedBox(
                   height: 10,
                 ),
-                textFieldpassword(
-                    controller: _password, text: "Enter your password"),
-                SizedBox(
-                  height: 15,
+                textField(
+                  controller: _password,
+                  text: "Enter your password",
+                  icon: Icon(Icons.password_rounded),
+                  hiddenText: true,
+                ),
+                 SizedBox(
+                  height: 25,
                 ),
                 Container(
                     width: 250,
@@ -120,25 +128,31 @@ class _SignupPageState extends State<SignupPage> {
   }
 }
 
-class textFieldusername extends StatelessWidget {
-  const textFieldusername({
+class textField extends StatelessWidget {
+  const textField({
     Key? key,
     required this.controller,
     required this.text,
+    required this.icon,
+    required this.hiddenText,
+
   }) : super(key: key);
 
   final TextEditingController controller;
   final String text;
+  final Icon icon;
+  final bool hiddenText; 
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 250,
       child: TextField(
+        obscureText: hiddenText,
         controller: controller,
         decoration: InputDecoration(
             hintText: text,
-            prefixIcon: Icon(Icons.person),
+            prefixIcon: icon,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
             )),
@@ -147,30 +161,30 @@ class textFieldusername extends StatelessWidget {
   }
 }
 
-class textFieldpassword extends StatelessWidget {
-  const textFieldpassword({
-    Key? key,
-    required this.controller,
-    required this.text,
-  }) : super(key: key);
+// class textFieldpassword extends StatelessWidget {
+//   const textFieldpassword({
+//     Key? key,
+//     required this.controller,
+//     required this.text,
+//   }) : super(key: key);
 
-  final TextEditingController controller;
-  final String text;
+//   final TextEditingController controller;
+//   final String text;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      child: TextField(
-        controller: controller,
-        obscureText: true,
-        decoration: InputDecoration(
-            hintText: text,
-            prefixIcon: Icon(Icons.password_sharp),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-            )),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 250,
+//       child: TextField(
+//         controller: controller,
+//         obscureText: true,
+//         decoration: InputDecoration(
+//             hintText: text,
+//             prefixIcon: Icon(Icons.password_sharp),
+//             border: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(15),
+//             )),
+//       ),
+//     );
+//   }
+// }
