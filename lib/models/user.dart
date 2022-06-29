@@ -4,14 +4,16 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
+  int? id;
   String username;
-  String image;
-  String password;
+  var image;
+  String? password;
 
   User({
+    this.id,
     required this.username,
-    required this.password,
-    this.image = "assets/images/default-profile.png",
+     this.password,
+    this.image,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
