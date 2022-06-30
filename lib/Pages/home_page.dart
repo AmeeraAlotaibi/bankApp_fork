@@ -57,7 +57,10 @@ class HomePage extends StatelessWidget {
                                 child: Text("Withdraw")),
                             SizedBox(width: 20),
                             ElevatedButton(
-                                onPressed: () {}, child: Text("Transfer")),
+                                onPressed: () {
+                                  context.push("/transfer-page");
+                                },
+                                child: Text("Transfer")),
                           ],
                         ),
                       )

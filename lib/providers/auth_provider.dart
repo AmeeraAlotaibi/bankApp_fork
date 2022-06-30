@@ -28,7 +28,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   bool get isAuth {
     // print("hiiiii");
     getToken();
@@ -68,7 +67,8 @@ class AuthProvider extends ChangeNotifier {
     print("logged out");
     notifyListeners();
   }
-// deposit 
+
+// deposit
   Future<Response> deposit(int amount, int id) async {
     Response res = await Client.dio.put("/deposit", data: {"amount": amount});
     user.balance = user.balance! + amount;
@@ -77,6 +77,7 @@ class AuthProvider extends ChangeNotifier {
     print(user.balance);
     return res;
   }
+
   // withdraw
   Future<Response> withdraw(int amount, int id) async {
     Response res = await Client.dio.put("/deposit", data: {"amount": amount});
@@ -84,6 +85,15 @@ class AuthProvider extends ChangeNotifier {
     user = user.copyWith(balance: user.balance! - amount);
     notifyListeners();
     print(user.balance);
+    return res;
+  }
+
+  Future<Response> transfer(int amount, String username) async {
+    Response res = await Client.dio.post("/transfer/${username}",
+        data: {"amount": amount, "username": username});
+    user.balance = user.balance! - amount;
+    notifyListeners();
+    print("MY AMOUNT ${user.balance}");
     return res;
   }
 }

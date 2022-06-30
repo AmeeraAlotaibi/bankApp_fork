@@ -1,6 +1,7 @@
 import 'package:bank_app/Pages/home_page.dart';
 import 'package:bank_app/Pages/signin_page.dart';
 import 'package:bank_app/Pages/test_page.dart';
+import 'package:bank_app/Pages/transfer_page.dart';
 import 'package:bank_app/Pages/welcome_page.dart';
 import 'package:bank_app/Pages/withdraw_page.dart';
 import 'package:bank_app/providers/auth_provider.dart';
@@ -44,5 +45,6 @@ class MyApp extends StatelessWidget {
     GoRoute(path: '/profile-page', builder: (context, state) => ProfilePage()),
     GoRoute(path: '/deposit-page', builder: (context, state) => DepositPage()),
     GoRoute(path: '/withdraw-page', builder: (context, state) => WithdrawPage()),
+    GoRoute(path: '/transfer-page', builder: (context, state) => TransferPage()),
   ]);
 }
