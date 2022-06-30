@@ -6,13 +6,13 @@ class AuthService {
   // sign up
   Future<String> signup({required User user}) async {
     late User retrievedUsername;
-    late String token = '';
+    late String token;
     try {
       FormData data = FormData.fromMap({
         "username": user.username,
         "passsword": user.password,
         "image": await MultipartFile.fromFile(
-          user.image?? "",
+          user.image ?? "",
         ),
       });
       Response res = await Client.dio.post("/signup", data: data);
@@ -35,7 +35,7 @@ class AuthService {
 
   // sign in
   Future<String> signin({required User user}) async {
-    late String token = '';
+    late String token;
     try {
       Response res = await Client.dio.post("/signin", data: user.toJson());
       token = res.data["token"];

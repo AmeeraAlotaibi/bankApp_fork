@@ -11,27 +11,32 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+          centerTitle: true,
           title: Text(
-        "My Profile",
-        style: TextStyle(fontSize: 20),
-      )),
-
+            "My Profile",
+            style: TextStyle(fontSize: 20),
+          )),
       body: Consumer<AuthProvider>(
-        builder: (context, auth, child) {
-          return Center(
-            child: Column(children: [
-              SizedBox(height:100,)
-              , Container(decoration: BoxDecoration(shape: BoxShape.circle,color: Colors.black), height:  100 
-                ,child: CircleAvatar(
-                                  backgroundColor: Colors.black12,
-                                  backgroundImage: NetworkImage(auth.user.image),
-                                ),
-              ),
-            ],),
-          );
-        }
-      ),
+          builder: (context, auth, child) => auth.isAuth
+              ? Center(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 100,
+                      ),
+                      Container(
+                        width: 200,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle, color: Colors.black),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black12,
+                          backgroundImage: NetworkImage(auth.user.image),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Text("Logged OUT")),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bank_app/Pages/home_page.dart';
 import 'package:bank_app/models/user.dart';
 import 'package:bank_app/providers/auth_provider.dart';
+import 'package:bank_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -18,12 +19,11 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  final _formKey = GlobalKey<FormState>();
   var _image;
   final _picker = ImagePicker();
   final _username = TextEditingController();
-  String text = "test";
   final _password = TextEditingController();
-  final _formKey = GlobalKey<FormState>();  
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,13 @@ class _SignupPageState extends State<SignupPage> {
         resizeToAvoidBottomInset: false,
         body: SafeArea(
             child: SingleChildScrollView(
-              child: Center(
-                  child: Form(
-                      key: _formKey,
-                      child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Text(
                     "Sign Up ",
                     style: TextStyle(fontSize: 50),
@@ -45,8 +45,8 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(
                     height: 20,
                   ),
-              
-              // ****************** Image Picker **************************
+
+                  // ****************** Image Picker **************************
                   GestureDetector(
                     onTap: () async {
                       final XFile? image =
@@ -98,7 +98,7 @@ class _SignupPageState extends State<SignupPage> {
                     icon: Icon(Icons.password_rounded),
                     hiddenText: true,
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 25,
                   ),
                   Container(
@@ -108,12 +108,12 @@ class _SignupPageState extends State<SignupPage> {
                           onPressed: () {
                             context.read<AuthProvider>().signup(
                                   user: User(
-                                      username: _username.text,
-                                      password: _password.text,
-                                      image: _image.path,
-                                      ),
+                                    username: _username.text,
+                                    password: _password.text,
+                                    image: _image.path,
+                                  ),
                                 );
-              
+
                             context.go('/home-page');
                           },
                           child: Text(
@@ -125,69 +125,8 @@ class _SignupPageState extends State<SignupPage> {
                                   borderRadius: BorderRadius.circular(15))))),
                 ],
               ),
-                      ),
-                    ),
-            )));
+            ),
+          ),
+        )));
   }
 }
-
-class textField extends StatelessWidget {
-  const textField({
-    Key? key,
-    required this.controller,
-    required this.text,
-    required this.icon,
-    required this.hiddenText,
-
-  }) : super(key: key);
-
-  final TextEditingController controller;
-  final String text;
-  final Icon icon;
-  final bool hiddenText; 
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      child: TextField(
-        obscureText: hiddenText,
-        controller: controller,
-        decoration: InputDecoration(
-            hintText: text,
-            prefixIcon: icon,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-            )),
-      ),
-    );
-  }
-}
-
-// class textFieldpassword extends StatelessWidget {
-//   const textFieldpassword({
-//     Key? key,
-//     required this.controller,
-//     required this.text,
-//   }) : super(key: key);
-
-//   final TextEditingController controller;
-//   final String text;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: 250,
-//       child: TextField(
-//         controller: controller,
-//         obscureText: true,
-//         decoration: InputDecoration(
-//             hintText: text,
-//             prefixIcon: Icon(Icons.password_sharp),
-//             border: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(15),
-//             )),
-//       ),
-//     );
-//   }
-// }

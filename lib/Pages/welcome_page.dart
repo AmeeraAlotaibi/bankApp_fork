@@ -1,4 +1,4 @@
-import 'package:bank_app/widgets/signin_sheet.dart';
+import 'package:bank_app/Pages/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -31,15 +31,7 @@ class WelcomePage extends StatelessWidget {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        )),
-                        context: context,
-                        builder: (context) => SigninSheet(),
-                      );
+                      context.push("/signin");
                     },
                     child: Text("Sign in"),
                   ),

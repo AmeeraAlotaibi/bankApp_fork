@@ -1,4 +1,3 @@
-import 'package:bank_app/Pages/profile_page.dart';
 import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -6,22 +5,26 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({Key? key}) : super(key: key);
+class DrawerConsumer extends StatelessWidget {
+  const DrawerConsumer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(
-      builder: (context, auth, child) => auth.isAuth
-          ? Drawer(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+        builder: (context, auth, child) => auth.isAuth
+            ? Column(
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   Expanded(
                     flex: 2,
                     child: DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Color(0xFFdddddd),
+                      ),
                       child: UserAccountsDrawerHeader(
-                        decoration: BoxDecoration(color: Color(0xFFfafafa)),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFdddddd),
+                        ),
                         accountName: Text(
                           auth.user.username,
                           style: TextStyle(
@@ -41,11 +44,13 @@ class HomeDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // ** List of links to pages ******
                   Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: ListView(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           ListTile(
                             title: Text(
@@ -90,35 +95,32 @@ class HomeDrawer extends StatelessWidget {
                             ),
                             trailing: Icon(Icons.logout),
                             onTap: () {
-                             
-                              // context.read<AuthProvider>().logout();
-                              // auth.logout();
+                              auth.logout();
                             },
-                          ),
+                          )
                         ],
                       ),
                     ),
                   )
                 ],
-              ),
-            )
-          : Drawer(
-              child: ListView(children: [
-              ListTile(
-                title: Text("Sign In"),
-                trailing: Icon(Icons.login),
-                onTap: () {
-                  context.go('/welcome-page');
-                },
-              ),
-              ListTile(
-                title: Text("Sign Up"),
-                trailing: Icon(Icons.how_to_reg_rounded),
-                onTap: () {
-                  context.push('/signup');
-                },
               )
-            ])),
-    );
+            : ListView(
+                children: [
+                  ListTile(
+                    title: Text("Sign in"),
+                    trailing: Icon(Icons.login),
+                    onTap: () {
+                      context.go('/signin');
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Sign up"),
+                    trailing: Icon(Icons.how_to_reg),
+                    onTap: () {
+                      context.go('/signup');
+                    },
+                  )
+                ],
+              ));
   }
 }

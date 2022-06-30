@@ -1,4 +1,5 @@
 import 'package:bank_app/Pages/home_page.dart';
+import 'package:bank_app/Pages/signin_page.dart';
 import 'package:bank_app/Pages/test_page.dart';
 import 'package:bank_app/Pages/welcome_page.dart';
 import 'package:bank_app/providers/auth_provider.dart';
@@ -35,8 +36,9 @@ class MyApp extends StatelessWidget {
     GoRoute(path: '/', builder: (context, state) => WelcomePage()),
     GoRoute(path: '/home-page', builder: (context, state) => HomePage()),
     GoRoute(path: '/signup', builder: (context, state) => SignupPage()),
+    GoRoute(path: '/signin', builder: (context, state) => SigninPage()),
     GoRoute(path: '/test-page', builder: (context, state) => HomePage()),
     GoRoute(path: '/welcome-page', builder: (context, state) => WelcomePage()),
-    GoRoute(path: '/profile-page', builder: (context, state) =>  ProfilePage()),
+    GoRoute(path: '/profile-page', builder: (context, state) => ProfilePage()),
   ]);
 }
