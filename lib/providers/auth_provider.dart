@@ -29,9 +29,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   bool get isAuth {
-    // print("hiiiii");
     getToken();
-    // print("Inside isAuth token = $token");
     if (token.isNotEmpty && !Jwt.isExpired(token)) {
       Jwt.isExpired(token);
       user = User.fromJson(Jwt.parseJwt(token));
