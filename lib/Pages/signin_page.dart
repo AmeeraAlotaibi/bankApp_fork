@@ -50,8 +50,8 @@ class SigninPage extends StatelessWidget {
                   width: 250,
                   height: 55,
                   child: ElevatedButton(
-                      onPressed: () {
-                        context.read<AuthProvider>().signin(
+                      onPressed: ()async  {
+                       await  context.read<AuthProvider>().signin(
                               user: User(
                                 username: _username.text,
                                 password: _password.text,

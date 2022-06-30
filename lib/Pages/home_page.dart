@@ -17,7 +17,52 @@ class HomePage extends StatelessWidget {
           child: DrawerConsumer(),
         ),
         body: SafeArea(
-          child: Center(child: Text("Hello Meera!")),
+          child: Consumer<AuthProvider>(
+              builder: (context, auth, child) => Column(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 25),
+                        height: 200,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(children: [
+                          Text("Account Balance:",
+                              style: TextStyle(
+                                fontSize: 25,
+                              )),
+                          Text(
+                            auth.user.balance.toString(),
+                            style: TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold),
+                          )
+                        ]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 44),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.push("/deposit-page");
+                                },
+                                child: Text("Deposit")),
+                            SizedBox(width: 20),
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.push('/withdraw-page');
+                                },
+                                child: Text("Withdraw")),
+                            SizedBox(width: 20),
+                            ElevatedButton(
+                                onPressed: () {}, child: Text("Transfer")),
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
         ));
   }
 }

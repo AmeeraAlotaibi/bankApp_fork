@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:bank_app/services/auth_services.dart';
 import 'package:bank_app/services/client.dart';
+import 'package:bank_app/services/client.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
@@ -19,11 +21,13 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void signin({required User user}) async {
+  Future<void> signin({required User user}) async {
     token = await AuthService().signin(user: user);
+
     setToken(token);
     notifyListeners();
   }
+
 
   bool get isAuth {
     // print("hiiiii");
@@ -45,12 +49,16 @@ class AuthProvider extends ChangeNotifier {
   void setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("token", token);
+    user = User.fromJson(Jwt.parseJwt(token));
+    Client.dio.options.headers = {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+    };
   }
 
   void getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString("token") ?? "";
-    notifyListeners();
+    // notifyListeners();
   }
 
   void logout() async {
@@ -59,5 +67,23 @@ class AuthProvider extends ChangeNotifier {
     token = "";
     print("logged out");
     notifyListeners();
+  }
+// deposit 
+  Future<Response> deposit(int amount, int id) async {
+    Response res = await Client.dio.put("/deposit", data: {"amount": amount});
+    user.balance = user.balance! + amount;
+    user = user.copyWith(balance: user.balance! + amount);
+    notifyListeners();
+    print(user.balance);
+    return res;
+  }
+  // withdraw
+  Future<Response> withdraw(int amount, int id) async {
+    Response res = await Client.dio.put("/deposit", data: {"amount": amount});
+    user.balance = user.balance! - amount;
+    user = user.copyWith(balance: user.balance! - amount);
+    notifyListeners();
+    print(user.balance);
+    return res;
   }
 }

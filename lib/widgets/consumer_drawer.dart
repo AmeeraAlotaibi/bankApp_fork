@@ -39,7 +39,7 @@ class DrawerConsumer extends StatelessWidget {
                         currentAccountPictureSize: Size.fromRadius(50),
                         currentAccountPicture: CircleAvatar(
                           backgroundColor: Colors.black12,
-                          backgroundImage: NetworkImage(auth.user.image),
+                          backgroundImage: NetworkImage(auth.user.image!),
                         ),
                       ),
                     ),
