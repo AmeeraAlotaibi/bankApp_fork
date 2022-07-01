@@ -11,72 +11,109 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "My Profile",
-            style: TextStyle(fontSize: 20),
-          )),
+        centerTitle: true,
+        title: Text(
+          "My Profile",
+          style: TextStyle(fontSize: 20),
+        ),
+        elevation: 0,
+      ),
       body: Consumer<AuthProvider>(
-          builder: (context, auth, child) => auth.isAuth
-              ? Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 75,
+          builder: (context, auth, child) => Center(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 25),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Color(0xFF7b4cf5),
+                            Color(0xFFb34cf5),
+                          ],
+                        ),
                       ),
-                      Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 5, 
-                              color: Color(0xFFdddddd),
+                      child: Column(children: [
+                        Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                width: 5,
+                                color: Color(0xFFdddddd),
                               ),
-                            image: DecorationImage(
-                              image: NetworkImage(auth.user.image!), 
-                              fit: BoxFit.cover)
-                            ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                      Text(auth.user.username, 
-                      style: TextStyle(
-                        fontSize: 27,
-                        fontWeight: FontWeight.bold
-                        ),),
-                      
-                      Container(
-                        margin: EdgeInsets.only(top: 25),
-                        height: 200,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                  image: NetworkImage(auth.user.image!),
+                                  fit: BoxFit.cover)),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "@username",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
                           ),
-
-                        child: Column(
+                        ),
+                        Text(
+                          auth.user.username.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 0.75,
+                          ),
+                        ),
+                      ]),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 25),
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      height: 200,
+                      width: 300,
+                      decoration: BoxDecoration(
+                          // gradient: LinearGradient(
+                          //   begin: Alignment.topRight,
+                          //   end: Alignment.bottomLeft,
+                          //   colors: [
+                          //     Color(0xFF7b4cf5),
+                          //     Color(0xFFb34cf5),
+                          //   ],
+                          // ),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            width: 6,
+                            color: Color(0xFF7b4cf5),
+                          )),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text("Account Balance:", 
-                              style: TextStyle(
-                                fontSize: 25,
+                            Text("Account Balance:".toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black87,
                                 )),
                             Text(
-                              auth.user.balance.toString(), 
+                              "\$${auth.user.balance.toString()}",
                               style: TextStyle(
-                                fontSize: 40, 
-                                fontWeight: FontWeight.bold
+                                fontSize: 40,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
                               ),
-                              )
-                          ]
-                          ),
-                      )
-                    ],
-                  ),
-                )
-              : Text("Logged OUT")),
+                            )
+                          ]),
+                    ),
+                  ],
+                ),
+              )),
     );
   }
 }

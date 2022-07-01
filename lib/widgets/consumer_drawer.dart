@@ -19,22 +19,32 @@ class DrawerConsumer extends StatelessWidget {
                     flex: 2,
                     child: DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Color(0xFFdddddd),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            Color(0xFF7b4cf5),
+                            Color(0xFFb34cf5),
+                          ],
+                        ),
                       ),
                       child: UserAccountsDrawerHeader(
                         decoration: BoxDecoration(
-                          color: Color(0xFFdddddd),
+                          color: Colors.transparent,
                         ),
                         accountName: Text(
                           auth.user.username,
                           style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 30,
+                            color: Colors.white,
+                            fontSize: 35,
                           ),
                         ),
                         accountEmail: Text(
-                          "Welcome Back",
-                          style: TextStyle(color: Colors.black54, fontSize: 17),
+                          "Welcome Back!",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15,
+                          ),
                         ),
                         currentAccountPictureSize: Size.fromRadius(50),
                         currentAccountPicture: CircleAvatar(
@@ -96,6 +106,7 @@ class DrawerConsumer extends StatelessWidget {
                             trailing: Icon(Icons.logout),
                             onTap: () {
                               auth.logout();
+                              context.go("/welcome-page");
                             },
                           )
                         ],
@@ -104,23 +115,26 @@ class DrawerConsumer extends StatelessWidget {
                   )
                 ],
               )
-            : ListView(
-                children: [
-                  ListTile(
-                    title: Text("Sign in"),
-                    trailing: Icon(Icons.login),
-                    onTap: () {
-                      context.go('/signin');
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Sign up"),
-                    trailing: Icon(Icons.how_to_reg),
-                    onTap: () {
-                      context.go('/signup');
-                    },
-                  )
-                ],
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  children: [
+                    ListTile(
+                      title: Text("Sign in"),
+                      leading: Icon(Icons.login),
+                      onTap: () {
+                        context.go('/welcome-page');
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Sign up"),
+                      leading: Icon(Icons.how_to_reg),
+                      onTap: () {
+                        context.go('/signup');
+                      },
+                    )
+                  ],
+                ),
               ));
   }
 }

@@ -8,14 +8,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class DepositPage extends StatelessWidget {
-  DepositPage({Key? key}) : super(key: key);
-  final amount = TextEditingController();
+class TransferPage extends StatelessWidget {
+  TransferPage({Key? key}) : super(key: key);
+
+  final _toUsername = TextEditingController();
+  final _amount = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Deposit",
+        title: Text("Transfer",
             style: TextStyle(
               fontSize: 25,
             )),
@@ -26,9 +28,10 @@ class DepositPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Center(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 150,
+                height: 50,
               ),
               Text(
                 "Current Balance".toUpperCase(),
@@ -52,23 +55,29 @@ class DepositPage extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
+              textField(
+                  controller: _toUsername,
+                  text: "Enter a username",
+                  icon: Icon(Icons.person),
+                  hiddenText: false),
+              SizedBox(
+                height: 10,
+              ),
               InputAmount(
-                controller: amount,
+                controller: _amount,
               ),
               SizedBox(
                 height: 10,
               ),
               CustomButton(
                 onPressed: () async {
-                  int amountDouble = int.parse(amount.text);
-                  int? id =
-                      Provider.of<AuthProvider>(context, listen: false).user.id;
+                  int amountDouble = int.parse(_amount.text);
                   await context
                       .read<TransactionsProvider>()
-                      .deposit(amountDouble, id!);
+                      .transfer(amountDouble, _toUsername.text);
                   context.pop();
                 },
-                text: "Deposit",
+                text: "Transfer",
               )
             ],
           ),

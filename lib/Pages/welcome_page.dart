@@ -1,4 +1,5 @@
 import 'package:bank_app/Pages/signin_page.dart';
+import 'package:bank_app/widgets/custom_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,56 +11,116 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: Image.asset(
-                  "assets/images/ally-bank-logo.png",
-                  width: 200,
-                ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/heavy.png"),
+                fit: BoxFit.cover,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // *************** SIGN IN *******************
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                    ),
-                    onPressed: () {
-                      context.push("/signin");
-                    },
-                    child: Text("Sign in"),
-                  ),
+            ),
+            // alignment: const Alignment(-1, 0),
+          ),
 
-                  SizedBox(width: 40),
-
-                  // *************** SIGN UP *******************
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
+// **************** CONTENT ******************************************************
+          SafeArea(
+            child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // **************** HELLO MESSAGE *****************
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        margin: EdgeInsets.only(top: 250),
+                        child: Text(
+                          "Hello!",
+                          style: TextStyle(
+                            fontSize: 60,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                      onPressed: () {
-                        context.push("/signup");
-                      },
-                      child: Text("Sign up")),
-                ],
-              ),
+                    ),
 
-              // *************** TESTING PAGE FOR THEMES *******************
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                  ),
-                  onPressed: () {
-                    context.push("/test-page");
-                  },
-                  child: Text("TEST")),
-            ]),
+                    SizedBox(
+                      height: 100,
+                    ),
+                    // ******************* BUTTONS *********************
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 250,
+                            child: Text(
+                              "Please login by using your credentials",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w300,
+                                  letterSpacing: 0.25),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          CustomButton(
+                            onPressed: () {
+                              context.push("/signin");
+                            },
+                            text: "Sign in",
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Not a member?",
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context.push("/signup");
+                                },
+                                style: TextButton.styleFrom(
+                                  primary: Color(0xFF7b4cf5),
+                                  padding: EdgeInsets.symmetric(horizontal: 3),
+                                ),
+                                child: Text("Create Account"),
+                              )
+                            ],
+                          ),
+
+                          // *************** SIGN UP *******************
+                          // CustomButton(
+                          //   function: () {
+                          //     context.push("/signup");
+                          //   },
+                          //   text: "Sign up",
+                          // ),
+
+                          // *************** TESTING PAGE FOR THEMES *******************
+                          // SquareButton(
+                          //     function: () {},
+                          //     text: "Money",
+                          //     icon: Icon(
+                          //       Icons.access_alarm,
+                          //       color: Colors.white,
+                          //     ))
+                        ],
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+        ],
       ),
     );
   }

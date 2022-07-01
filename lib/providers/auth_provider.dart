@@ -1,15 +1,14 @@
 import 'dart:io';
+
 import 'package:bank_app/services/auth_services.dart';
 import 'package:bank_app/services/client.dart';
-import 'package:bank_app/services/client.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class AuthProvider extends ChangeNotifier {
-  String token = "";
+  late String token = "";
   late User user;
   bool loading = false;
 
@@ -17,19 +16,21 @@ class AuthProvider extends ChangeNotifier {
     loading = true;
     token = await AuthService().signup(user: user);
     setToken(token);
-    print(token);
+    print("SIGN UP: $token");
     notifyListeners();
   }
 
   Future<void> signin({required User user}) async {
     token = await AuthService().signin(user: user);
-
     setToken(token);
+    print("SIGN IN: $token");
     notifyListeners();
   }
 
   bool get isAuth {
+    // print("This is before $token");
     getToken();
+    // print("This is after getToken isAuth $token");
     if (token.isNotEmpty && !Jwt.isExpired(token)) {
       Jwt.isExpired(token);
       user = User.fromJson(Jwt.parseJwt(token));
@@ -64,34 +65,5 @@ class AuthProvider extends ChangeNotifier {
     token = "";
     print("logged out");
     notifyListeners();
-  }
-
-// deposit
-  Future<Response> deposit(int amount, int id) async {
-    Response res = await Client.dio.put("/deposit", data: {"amount": amount});
-    user.balance = user.balance! + amount;
-    user = user.copyWith(balance: user.balance! + amount);
-    notifyListeners();
-    print(user.balance);
-    return res;
-  }
-
-  // withdraw
-  Future<Response> withdraw(int amount, int id) async {
-    Response res = await Client.dio.put("/deposit", data: {"amount": amount});
-    user.balance = user.balance! - amount;
-    user = user.copyWith(balance: user.balance! - amount);
-    notifyListeners();
-    print(user.balance);
-    return res;
-  }
-
-  Future<Response> transfer(int amount, String username) async {
-    Response res = await Client.dio.post("/transfer/${username}",
-        data: {"amount": amount, "username": username});
-    user.balance = user.balance! - amount;
-    notifyListeners();
-    print("MY AMOUNT ${user.balance}");
-    return res;
   }
 }
