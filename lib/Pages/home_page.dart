@@ -154,7 +154,7 @@ class HomePage extends StatelessWidget {
                                 },
                                 text: "Transfer",
                                 icon: Icon(
-                                  Icons.autorenew_sharp,
+                                  Icons.autorenew_rounded,
                                   color: Colors.white,
                                 ),
                               ),
@@ -201,7 +201,7 @@ class HomePage extends StatelessWidget {
                               height: 10,
                             ),
                             // ********************* CUSTOM WIDGET
-                            TransactionCard(),
+                            // TransactionCard(),
                           ],
                         ),
                       )

@@ -66,6 +66,7 @@ class DepositPage extends StatelessWidget {
                   await context
                       .read<TransactionsProvider>()
                       .deposit(amountDouble, id!);
+                  print(amountDouble);
                   context.pop();
                 },
                 text: "Deposit",

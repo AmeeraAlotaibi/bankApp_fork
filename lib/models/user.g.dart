@@ -10,7 +10,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as int?,
       username: json['username'] as String,
       password: json['password'] as String?,
-      image: json['image'],
+      image: json['image'] as String?,
       balance: (json['balance'] as num?)?.toDouble(),
     );
 

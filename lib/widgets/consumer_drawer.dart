@@ -80,7 +80,9 @@ class DrawerConsumer extends StatelessWidget {
                                   color: Colors.black87, fontSize: 17),
                             ),
                             leading: Icon(Icons.monetization_on),
-                            onTap: () {},
+                            onTap: () {
+                              context.push("/transactions");
+                            },
                           ),
                           ListTile(
                             title: Text(
@@ -123,7 +125,7 @@ class DrawerConsumer extends StatelessWidget {
                       title: Text("Sign in"),
                       leading: Icon(Icons.login),
                       onTap: () {
-                        context.go('/welcome-page');
+                        context.go('/signin');
                       },
                     ),
                     ListTile(

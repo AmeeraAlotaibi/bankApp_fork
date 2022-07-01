@@ -17,105 +17,115 @@ class SigninPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-// ************* background image ******************
-        Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/background.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
+        appBar: AppBar(
+          title: Text(""),
+          centerTitle: true,
+          elevation: 0,
         ),
+        body: Stack(
+          children: [
+// ************* background image ******************
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
 // *********** Sign in ***************
-        SafeArea(
-          child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // **************** HELLO MESSAGE *****************
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      margin: EdgeInsets.only(top: 100),
-                      child: Text(
-                        "Sign in",
-                        style: TextStyle(
-                          fontSize: 60,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+            SafeArea(
+              child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // **************** HELLO MESSAGE *****************
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 50),
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(
+                              fontSize: 60,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  // ******************* BUTTONS *********************
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        textField(
-                          controller: _username,
-                          text: "Enter your username",
-                          icon: Icon(Icons.person),
-                          hiddenText: false,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        textField(
-                          controller: _password,
-                          text: "Enter your password",
-                          icon: Icon(Icons.password_rounded),
-                          hiddenText: true,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        CustomButton(
-                          onPressed: () async {
-                            await context.read<AuthProvider>().signin(
-                                  user: User(
-                                    username: _username.text,
-                                    password: _password.text,
-                                  ),
-                                );
-                            context.push("/home-page");
-                          },
-                          text: "Sign in",
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      // ******************* BUTTONS *********************
+                      Expanded(
+                        flex: 3,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              "Not a member?",
-                              style: TextStyle(
-                                color: Colors.black54,
-                              ),
+                            textField(
+                              controller: _username,
+                              text: "Enter your username",
+                              icon: Icon(Icons.person),
+                              hiddenText: false,
                             ),
-                            TextButton(
-                              onPressed: () {
-                                context.push("/signup");
+                            SizedBox(
+                              height: 10,
+                            ),
+                            textField(
+                              controller: _password,
+                              text: "Enter your password",
+                              icon: Icon(Icons.password_rounded),
+                              hiddenText: true,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            CustomButton(
+                              onPressed: () async {
+                                await context.read<AuthProvider>().signin(
+                                      user: User(
+                                        username: _username.text,
+                                        password: _password.text,
+                                      ),
+                                    );
+                                if (ConnectionState ==
+                                    ConnectionState.waiting) {
+                                  Center(child: CircularProgressIndicator());
+                                } else
+                                  context.push("/home-page");
                               },
-                              style: TextButton.styleFrom(
-                                primary: Color(0xFF7b4cf5),
-                                padding: EdgeInsets.symmetric(horizontal: 3),
-                              ),
-                              child: Text("Create Account"),
-                            )
+                              text: "Sign in",
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Not a member?",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    context.push("/signup");
+                                  },
+                                  style: TextButton.styleFrom(
+                                    primary: Color(0xFF7b4cf5),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 3),
+                                  ),
+                                  child: Text("Create Account"),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                ]),
-          ),
-        ),
-      ],
-    ));
+                      ),
+                    ]),
+              ),
+            ),
+          ],
+        ));
   }
 }
 
