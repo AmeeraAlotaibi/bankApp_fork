@@ -88,11 +88,7 @@ class SigninPage extends StatelessWidget {
                                         password: _password.text,
                                       ),
                                     );
-                                if (ConnectionState ==
-                                    ConnectionState.waiting) {
-                                  Center(child: CircularProgressIndicator());
-                                } else
-                                  context.push("/home-page");
+                                context.push("/home-page");
                               },
                               text: "Sign in",
                             ),

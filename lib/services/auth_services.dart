@@ -27,8 +27,7 @@ class AuthService {
     late String token;
     print("THIS IS ${user.username} and password ${user.password}");
     try {
-      Response res = await Client.dio.post("/signin",
-          data: {"username": user.username, "password": user.password});
+      Response res = await Client.dio.post("/signin", data: user.toJson());
       token = res.data["token"];
       print("Sign in $token");
     } on DioError catch (error) {

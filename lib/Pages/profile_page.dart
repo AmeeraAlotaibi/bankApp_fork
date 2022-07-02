@@ -43,7 +43,7 @@ class ProfilePage extends StatelessWidget {
                               shape: BoxShape.circle,
                               border: Border.all(
                                 width: 5,
-                                color: Color(0xFFdddddd),
+                                color: Colors.white,
                               ),
                               image: DecorationImage(
                                   image: NetworkImage(auth.user.image!),

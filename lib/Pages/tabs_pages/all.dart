@@ -15,9 +15,10 @@ class AllTab extends StatelessWidget {
         future: Provider.of<TransactionsProvider>(context, listen: false)
             .getTransactions(),
         builder: (context, dataSnapshot) {
-          return Consumer<TransactionsProvider>(
-            builder: (context, tran, child) => TransactionCard(),
-          );
+          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else
+            return TransactionCard();
         },
       ));
 }
