@@ -1,56 +1,32 @@
-import 'package:bank_app/models/transaction.dart';
 import 'package:bank_app/providers/auth_provider.dart';
-import 'package:bank_app/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-class AllTab extends StatefulWidget {
-  const AllTab({Key? key}) : super(key: key);
+class WithdrawsTab extends StatefulWidget {
+  const WithdrawsTab({Key? key}) : super(key: key);
 
   @override
-  State<AllTab> createState() => _AllTabState();
+  State<WithdrawsTab> createState() => _WithdrawsTabState();
 }
 
-class _AllTabState extends State<AllTab> {
-  late Future<List<Transaction>> transaction;
+class _WithdrawsTabState extends State<WithdrawsTab> {
+  late Future<dynamic> data;
   void initState() {
+    data = AuthProvider().getWithdraws();
     super.initState();
-    transaction = AuthProvider().getTransactions();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-          body: FutureBuilder(
-        future: transaction,
-        builder: (BuildContext context, dataSnapshot) {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: data,
+        builder: (context, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
-            );
-          } else if (dataSnapshot.data == null) {
-            print("FUTURE BUILDER ERROR: ${dataSnapshot.data}");
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_sharp,
-                    color: Colors.orange,
-                    size: 40,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Nothing to see here :(",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
             );
           } else if (dataSnapshot.hasError) {
             return const Center(
@@ -66,7 +42,7 @@ class _AllTabState extends State<AllTab> {
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 child: ListView.builder(
                     itemCount: auth.transactions.length,
-                    itemBuilder: (context, int index) => Container(
+                    itemBuilder: (context, index) => Container(
                           width: 350,
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                           decoration: const BoxDecoration(
@@ -173,5 +149,7 @@ class _AllTabState extends State<AllTab> {
             );
           }
         },
-      ));
+      ),
+    );
+  }
 }

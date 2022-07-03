@@ -8,9 +8,8 @@ class TransactionsService {
   Future<List<Transaction>> getTransactions() async {
     try {
       Response res = await Client.dio.get('/transactions');
-      transactions = (res.data as List)
-          .map((transaction) => Transaction.fromJson(transaction))
-          .toList();
+      transactions =
+          (res.data as List).map((e) => Transaction.fromJson(e)).toList();
     } on DioError catch (error) {
       print(error);
     }

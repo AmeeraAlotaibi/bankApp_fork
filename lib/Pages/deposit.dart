@@ -1,5 +1,4 @@
 import 'package:bank_app/providers/auth_provider.dart';
-import 'package:bank_app/providers/transactions_provider.dart';
 import 'package:bank_app/widgets/custom_buttons.dart';
 import 'package:bank_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -13,68 +12,68 @@ class DepositPage extends StatelessWidget {
   final amount = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Deposit",
-            style: TextStyle(
-              fontSize: 25,
-            )),
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-              ),
-              Text(
-                "Current Balance".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black87,
-                  letterSpacing: 0.5,
+    return Consumer<AuthProvider>(builder: (context, tran, child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Deposit",
+              style: TextStyle(
+                fontSize: 25,
+              )),
+          centerTitle: true,
+          elevation: 0,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 150,
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "\$${context.watch<AuthProvider>().user.balance}",
-                style: TextStyle(
-                  fontSize: 45,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                Text(
+                  "Current Balance".toUpperCase(),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black87,
+                    letterSpacing: 0.5,
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              InputAmount(
-                controller: amount,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomButton(
-                onPressed: () async {
-                  int amountDouble = int.parse(amount.text);
-                  int? id =
-                      Provider.of<AuthProvider>(context, listen: false).user.id;
-                  await context
-                      .read<TransactionsProvider>()
-                      .deposit(amountDouble, id!);
-                  print(amountDouble);
-                  context.pop();
-                },
-                text: "Deposit",
-              )
-            ],
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "\$${context.watch<AuthProvider>().user.balance}",
+                  style: TextStyle(
+                    fontSize: 45,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                InputAmount(
+                  controller: amount,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomButton(
+                  onPressed: () async {
+                    int intAmount = int.parse(amount.text);
+                    // int? id =
+                    //     Provider.of<AuthProvider>(context, listen: false).user.id;
+                    await tran.deposit(intAmount);
+                    print(intAmount);
+                    context.pop();
+                  },
+                  text: "Deposit",
+                )
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

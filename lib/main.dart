@@ -5,7 +5,6 @@ import 'package:bank_app/Pages/welcome_page.dart';
 import 'package:bank_app/Pages/withdraw_page.dart';
 import 'package:bank_app/pages/transactions.dart';
 import 'package:bank_app/providers/auth_provider.dart';
-import 'package:bank_app/providers/transactions_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ChangeNotifierProvider(create: (_) => TransactionsProvider()),
     ],
     child: MyApp(),
   ));

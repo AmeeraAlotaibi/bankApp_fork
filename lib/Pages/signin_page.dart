@@ -44,8 +44,8 @@ class SigninPage extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          margin: EdgeInsets.only(top: 50),
-                          child: Text(
+                          margin: const EdgeInsets.only(top: 50),
+                          child: const Text(
                             "Sign in",
                             style: TextStyle(
                               fontSize: 60,
@@ -65,10 +65,10 @@ class SigninPage extends StatelessWidget {
                             textField(
                               controller: _username,
                               text: "Enter your username",
-                              icon: Icon(Icons.person),
+                              icon: const Icon(Icons.person),
                               hiddenText: false,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             textField(
@@ -77,7 +77,7 @@ class SigninPage extends StatelessWidget {
                               icon: Icon(Icons.password_rounded),
                               hiddenText: true,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             CustomButton(
@@ -95,7 +95,7 @@ class SigninPage extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   "Not a member?",
                                   style: TextStyle(
                                     color: Colors.black54,
@@ -107,10 +107,10 @@ class SigninPage extends StatelessWidget {
                                   },
                                   style: TextButton.styleFrom(
                                     primary: Color(0xFF7b4cf5),
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 3),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 3),
                                   ),
-                                  child: Text("Create Account"),
+                                  child: const Text("Create Account"),
                                 )
                               ],
                             ),
@@ -124,59 +124,3 @@ class SigninPage extends StatelessWidget {
         ));
   }
 }
-
-// SafeArea(
-//         child: SingleChildScrollView(
-//             child: Center(
-//           child: Column(
-//             children: [
-//               Text(
-//                 "Sign in",
-//                 style: TextStyle(fontSize: 50),
-//               ),
-//               SizedBox(
-//                 height: 60,
-//               ),
-//               textField(
-//                 controller: _username,
-//                 text: "Enter your username",
-//                 icon: Icon(Icons.person),
-//                 hiddenText: false,
-//               ),
-//               SizedBox(
-//                 height: 10,
-//               ),
-//               textField(
-//                 controller: _password,
-//                 text: "Enter your password",
-//                 icon: Icon(Icons.password_rounded),
-//                 hiddenText: true,
-//               ),
-//               SizedBox(
-//                 height: 25,
-//               ),
-//               Container(
-//                   width: 250,
-//                   height: 55,
-//                   child: ElevatedButton(
-//                       onPressed: ()async  {
-//                        await  context.read<AuthProvider>().signin(
-//                               user: User(
-//                                 username: _username.text,
-//                                 password: _password.text,
-//                               ),
-//                             );
-
-//                         context.go('/home-page');
-//                       },
-//                       child: Text(
-//                         "Sign in",
-//                       ),
-//                       style: ElevatedButton.styleFrom(
-//                           elevation: 0,
-//                           shape: RoundedRectangleBorder(
-//                               borderRadius: BorderRadius.circular(15))))),
-//             ],
-//           ),
-//         )),
-//       ),

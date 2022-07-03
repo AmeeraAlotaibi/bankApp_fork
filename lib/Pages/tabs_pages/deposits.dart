@@ -1,56 +1,34 @@
-import 'package:bank_app/models/transaction.dart';
 import 'package:bank_app/providers/auth_provider.dart';
-import 'package:bank_app/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
-class AllTab extends StatefulWidget {
-  const AllTab({Key? key}) : super(key: key);
+import '../../models/transaction.dart';
+
+class DepositsTab extends StatefulWidget {
+  const DepositsTab({Key? key}) : super(key: key);
 
   @override
-  State<AllTab> createState() => _AllTabState();
+  State<DepositsTab> createState() => _DepositsTabState();
 }
 
-class _AllTabState extends State<AllTab> {
-  late Future<List<Transaction>> transaction;
+class _DepositsTabState extends State<DepositsTab> {
+  late Future<dynamic> data;
   void initState() {
+    data = AuthProvider().getDeposits();
     super.initState();
-    transaction = AuthProvider().getTransactions();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-          body: FutureBuilder(
-        future: transaction,
-        builder: (BuildContext context, dataSnapshot) {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: data,
+        builder: (context, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
-            );
-          } else if (dataSnapshot.data == null) {
-            print("FUTURE BUILDER ERROR: ${dataSnapshot.data}");
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline_sharp,
-                    color: Colors.orange,
-                    size: 40,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Nothing to see here :(",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
             );
           } else if (dataSnapshot.hasError) {
             return const Center(
@@ -65,8 +43,8 @@ class _AllTabState extends State<AllTab> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 child: ListView.builder(
-                    itemCount: auth.transactions.length,
-                    itemBuilder: (context, int index) => Container(
+                    itemCount: auth.deposits.length,
+                    itemBuilder: (context, index) => Container(
                           width: 350,
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
                           decoration: const BoxDecoration(
@@ -92,21 +70,21 @@ class _AllTabState extends State<AllTab> {
                                     color: Color.fromARGB(12, 0, 0, 0),
                                   ),
                                   child: Icon(
-                                    auth.transactions[index].type == "deposit"
+                                    auth.deposits[index].type == "deposit"
                                         ? Icons.attach_money_rounded
-                                        : auth.transactions[index].type ==
+                                        : auth.deposits[index].type ==
                                                 "withdraw"
                                             ? Icons
                                                 .remove_circle_outline_rounded
                                             : Icons.autorenew_rounded,
                                     size: 35,
-                                    color: auth.transactions[index].type ==
-                                            "deposit"
-                                        ? Colors.green
-                                        : auth.transactions[index].type ==
-                                                "withdraw"
-                                            ? Colors.red
-                                            : Colors.blue,
+                                    color:
+                                        auth.deposits[index].type == "deposit"
+                                            ? Colors.green
+                                            : auth.transactions[index].type ==
+                                                    "withdraw"
+                                                ? Colors.red
+                                                : Colors.blue,
                                   ),
                                 ),
                                 // ************* DATE AND TRANSACTION TYPE
@@ -118,8 +96,7 @@ class _AllTabState extends State<AllTab> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      auth.transactions[index].type
-                                          .toUpperCase(),
+                                      auth.deposits[index].type.toUpperCase(),
                                       style: const TextStyle(
                                         color: Colors.black87,
                                         fontSize: 22.5,
@@ -127,7 +104,7 @@ class _AllTabState extends State<AllTab> {
                                       ),
                                     ),
                                     Text(
-                                      auth.transactions[index].createdAt,
+                                      auth.deposits[index].createdAt,
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontSize: 12.5,
@@ -142,12 +119,12 @@ class _AllTabState extends State<AllTab> {
                                 Column(
                                   children: [
                                     Text(
-                                      "\$${auth.transactions[index].amount}",
+                                      "\$${auth.deposits[index].amount}",
                                       style: TextStyle(
-                                        color: auth.transactions[index].type ==
+                                        color: auth.deposits[index].type ==
                                                 "deposit"
                                             ? Colors.green
-                                            : auth.transactions[index].type ==
+                                            : auth.deposits[index].type ==
                                                     "withdraw"
                                                 ? Colors.red
                                                 : Colors.blue,
@@ -173,5 +150,7 @@ class _AllTabState extends State<AllTab> {
             );
           }
         },
-      ));
+      ),
+    );
+  }
 }

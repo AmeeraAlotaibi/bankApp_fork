@@ -4,16 +4,18 @@ part 'transaction.g.dart';
 
 @JsonSerializable()
 class Transaction {
-  int senderID;
-  int receiverID;
+  int senderId;
+  int receiverId;
   int amount;
   String type;
+  String createdAt;
 
   Transaction({
     required this.amount,
     required this.type,
-    required this.senderID,
-    required this.receiverID,
+    required this.senderId,
+    required this.receiverId,
+    required this.createdAt,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) =>

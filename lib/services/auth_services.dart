@@ -1,3 +1,4 @@
+import 'package:bank_app/models/transaction.dart';
 import 'package:bank_app/services/client.dart';
 import 'package:dio/dio.dart';
 import '../models/user.dart';

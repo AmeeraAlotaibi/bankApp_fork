@@ -1,4 +1,7 @@
 import 'package:bank_app/pages/tabs_pages/all.dart';
+import 'package:bank_app/pages/tabs_pages/deposits.dart';
+import 'package:bank_app/pages/tabs_pages/transfers.dart';
+import 'package:bank_app/pages/tabs_pages/withdraws.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,7 +22,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
               title: Text("Transactions"),
               centerTitle: true,
               elevation: 0,
-              bottom: TabBar(tabs: [
+              bottom: const TabBar(tabs: [
                 Tab(
                   text: "All",
                   icon: Icon(
@@ -49,15 +52,9 @@ class _TransactionsPageState extends State<TransactionsPage> {
             body: TabBarView(
               children: [
                 AllTab(),
-                Center(
-                  child: Text("Tab2!"),
-                ),
-                Center(
-                  child: Text("Tab3!"),
-                ),
-                Center(
-                  child: Text("Tab4!"),
-                ),
+                DepositsTab(),
+                WithdrawsTab(),
+                TransfersTab()
               ],
             )),
       );

@@ -9,14 +9,16 @@ part of 'transaction.dart';
 Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       amount: json['amount'] as int,
       type: json['type'] as String,
-      senderID: json['senderID'] as int,
-      receiverID: json['receiverID'] as int,
+      senderId: json['senderId'] as int,
+      receiverId: json['receiverId'] as int,
+      createdAt: json['createdAt'] as String,
     );
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
     <String, dynamic>{
-      'senderID': instance.senderID,
-      'receiverID': instance.receiverID,
+      'senderId': instance.senderId,
+      'receiverId': instance.receiverId,
       'amount': instance.amount,
       'type': instance.type,
+      'createdAt': instance.createdAt,
     };
