@@ -12,7 +12,7 @@ class DepositPage extends StatelessWidget {
   final amount = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(builder: (context, tran, child) {
+    return Consumer<AuthProvider>(builder: (context, auth, child) {
       return Scaffold(
         appBar: AppBar(
           title: Text("Deposit",
@@ -42,7 +42,7 @@ class DepositPage extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "\$${context.watch<AuthProvider>().user.balance}",
+                  "\$${auth.user.balance}",
                   style: TextStyle(
                     fontSize: 45,
                     fontWeight: FontWeight.bold,
@@ -63,8 +63,7 @@ class DepositPage extends StatelessWidget {
                     int intAmount = int.parse(amount.text);
                     // int? id =
                     //     Provider.of<AuthProvider>(context, listen: false).user.id;
-                    await tran.deposit(intAmount);
-                    print(intAmount);
+                    await auth.deposit(intAmount);
                     context.pop();
                   },
                   text: "Deposit",

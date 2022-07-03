@@ -16,8 +16,8 @@ class AllTab extends StatefulWidget {
 class _AllTabState extends State<AllTab> {
   late Future<List<Transaction>> transaction;
   void initState() {
-    super.initState();
     transaction = AuthProvider().getTransactions();
+    super.initState();
   }
 
   @override

@@ -4,7 +4,6 @@ import 'package:bank_app/models/transaction.dart';
 import 'package:bank_app/models/user.dart';
 import 'package:bank_app/services/auth_services.dart';
 import 'package:bank_app/services/client.dart';
-import 'package:bank_app/services/transactions_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,13 +69,32 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+// ********************* USER PROFILE UPDATE *********************
+  bool value = false;
+  Future<bool> updateProfile(
+      {required String username, required String password, File? image}) async {
+    try {
+      FormData data = FormData.fromMap({
+        "username": username,
+        "password": password,
+        "image": await MultipartFile.fromFile(image!.path),
+      });
+
+      Response res = await Client.dio.put("/update", data: data);
+      value = true;
+    } on DioError catch (error) {
+      print(error);
+    }
+    notifyListeners();
+    return value;
+  }
+
 // ***************** TRANSACTIONS
-// I wanted to move these functions to a different file but that broke the whole function so I moved it back in here :(
   // deposit
   Future<Response> deposit(int amount) async {
     Response res = await Client.dio.put("/deposit", data: {"amount": amount});
-    // user.balance = user.balance! + amount;
-    user = user.copyWith(balance: user.balance! + amount);
+    user.balance = user.balance! + amount;
+    // user = user.copyWith(balance: user.balance! + amount);
     print("DEPOSITED: ${user.balance}");
     notifyListeners();
     return res;
@@ -85,10 +103,10 @@ class AuthProvider extends ChangeNotifier {
   // withdraw
   Future<Response> withdraw(int amount) async {
     Response res = await Client.dio.put("/withdraw", data: {"amount": amount});
-    // user.balance = user.balance! - amount;
-    user = user.copyWith(balance: user.balance! - amount);
+    user.balance = user.balance! - amount;
+    // user = user.copyWith(balance: user.balance! - amount);
+    print("WITHDRAWN: ${user.balance}");
     notifyListeners();
-    print(user.balance);
     return res;
   }
 
@@ -97,18 +115,10 @@ class AuthProvider extends ChangeNotifier {
     Response res = await Client.dio.post("/transfer/${username}",
         data: {"amount": amount, "username": username});
     user.balance = user.balance! - amount;
+    print("TRANSFERED ${user.balance}");
     notifyListeners();
-    print("MY AMOUNT ${user.balance}");
     return res;
   }
-
-  // TRANSACTIONS LIST
-  // List<Transaction> transactions = [];
-  // Future<List<Transaction>> getTransactions() async {
-  //   transactions = await TransactionsService().getTransactions();
-  //   notifyListeners();
-  //   return transactions;
-  // }
 
 // ****************** LIST OF ALL TRANSACTIONS **********************************
   List<Transaction> transactions = [];
@@ -123,7 +133,7 @@ class AuthProvider extends ChangeNotifier {
     } on DioError catch (error) {
       print(error);
     }
-    // notifyListeners();
+    notifyListeners();
     return transactions;
   }
 

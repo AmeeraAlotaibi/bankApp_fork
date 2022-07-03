@@ -2,11 +2,17 @@ import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +23,25 @@ class ProfilePage extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
         elevation: 0,
+        actions: [
+          GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Icon(
+                Icons.refresh_rounded,
+                size: 30,
+              ),
+            ),
+            onTap: () {
+              setState(() {});
+            },
+          ),
+        ],
       ),
       body: Consumer<AuthProvider>(
           builder: (context, auth, child) => Center(
-                child: Column(
+                child: Flex(
+                  direction: Axis.vertical,
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 25),
@@ -52,20 +73,51 @@ class ProfilePage extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        Text(
-                          "@username",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          auth.user.username.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 0.75,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 45),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "@username",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Text(
+                                    auth.user.username.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      letterSpacing: 0.75,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 12),
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: GestureDetector(
+                                  child: Icon(
+                                    Icons.mode_edit_rounded,
+                                    color: Colors.black87,
+                                  ),
+                                  onTap: () {
+                                    context.push("/edit-profile");
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ]),
@@ -79,14 +131,6 @@ class ProfilePage extends StatelessWidget {
                       height: 200,
                       width: 300,
                       decoration: BoxDecoration(
-                          // gradient: LinearGradient(
-                          //   begin: Alignment.topRight,
-                          //   end: Alignment.bottomLeft,
-                          //   colors: [
-                          //     Color(0xFF7b4cf5),
-                          //     Color(0xFFb34cf5),
-                          //   ],
-                          // ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             width: 6,

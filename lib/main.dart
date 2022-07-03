@@ -3,6 +3,7 @@ import 'package:bank_app/Pages/signin_page.dart';
 import 'package:bank_app/Pages/transfer.dart';
 import 'package:bank_app/Pages/welcome_page.dart';
 import 'package:bank_app/Pages/withdraw_page.dart';
+import 'package:bank_app/pages/edit_profile.dart';
 import 'package:bank_app/pages/transactions.dart';
 import 'package:bank_app/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -56,5 +57,6 @@ class MyApp extends StatelessWidget {
         path: '/transfer-page', builder: (context, state) => TransferPage()),
     GoRoute(
         path: '/transactions', builder: (context, state) => TransactionsPage()),
+    GoRoute(path: '/edit-profile', builder: (context, state) => EditProfile()),
   ]);
 }
